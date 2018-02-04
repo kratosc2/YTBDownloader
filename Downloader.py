@@ -3,7 +3,8 @@ import youtube_dl
 from appJar import gui
 import time
 
-app = gui('YouTubeAudioDownloader','1000x500')
+
+app = gui('YouTubeAudioDownloader','1000x550')
 
 class MyLogger(object):
     def debug(self,msg):
@@ -29,13 +30,15 @@ def press(btn):
         durl = app.getEntry('e1')
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             mt1 = ydl.extract_info(durl)
-            app.addListItems('lb2', [('Title: ' + str(mt1['title'])), ('Uploader:' + str(mt1['uploader'])), ('Views:' +str(mt1['view_count'])),('Duration:' + str(mt1['duration'])),('Upload Date:' + str(mt1['upload_date'])),('Format :' + str(mt1['format']))  ])
+            mt1a = mt1['title'].encode('ascii','replace')
+            mt2a = mt1['uploader'].encode('ascii','replace')
+            app.addListItems('lb2', [('Title: ' + mt1a), ('Uploader:' + str(mt1['uploader'])), ('Views:' +str(mt1['view_count'])),('Duration:' + str(mt1['duration'])),('Upload Date:' + str(mt1['upload_date'])),('Formatv :' + str(mt1['format']))])
             if optb == None:
                 optb = 'Video'
             app.addListItem('l5','Download Started as' + ' ' + optb + '...')
 
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-            optb = app.getOptionBox('Format')
+            optb = app.getOptionBox('Format:')
             if optb == 'best':
                 optb = 'Video'
             elif optb == None:
@@ -51,6 +54,7 @@ def press(btn):
 
 
 app.addEntry('e1',0,0)
+app.setEntryDefault('e1','URL')
 app.addButton('Download',press,0,1)
 app.setButtonSticky('Download','news')
 app.addLabel('l2','Downloaded Items',1,0)
