@@ -38,7 +38,7 @@ def press(btn):
             app.addListItem('l5','Download Started as' + ' ' + optb + '...')
 
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-            optb = app.getOptionBox('Format:')
+            optb = app.getOptionBox('Format')
             if optb == 'best':
                 optb = 'Video'
             elif optb == None:
