@@ -57,7 +57,7 @@ def press(btn):
         'key': 'FFmpegExtractAudio',
         'preferredcodec': 'mp3',
         'preferredquality': '192',
-        }]}
+        }],'outtmpl':locat + '%(title)s'+'%(id)s'+'.' +'%(ext)s'}
         durl = app.getEntry('e1')
         
         def getinfo():
