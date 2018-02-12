@@ -74,7 +74,7 @@ def press(btn):
                 app.addGridRow('lb1',[mt1t,mt2u,mt3v,mt4d,mt5ud,mt6ex,mtf])
                 ydl.download([durl])
                 print locat
-
+                app.clearEntry('e1')
         app.thread(getinfo) 
 
 
@@ -93,21 +93,23 @@ app.setEntrySticky('e1','news')
 app.addGrid('lb1',[['Title','Uploader','Views','Duration','Upload Date','Ext','Format']],2,0,2,2)
 app.setGridSticky('lb1','news')
 app.addLabelOptionBox('Format',['-Video-','best','-Audio-','bestaudio'],3,1)
+app.setOptionBoxSticky('Format','top')
 app.addLabel('l4','Logger',4,0)
-app.setLabelSticky('l4','ews')
+app.setLabelSticky('l4','news')
 app.addLabel('l5b','',4,1)
-app.setLabelSticky('l5b','ews')
+app.setLabelSticky('l5b','news')
 app.setLabelBg('l5b','seagreen')
 app.setLabelBg('l4','seagreen')
 app.addListBox('l5','',5,0,2,2)
 app.setListBoxSticky('l5','news')
 app.addMeter('progress',3,0)
+app.setMeterSticky('progress','ews')
 app.setMeterFill('progress','seagreen')
 app.addMenuList('File',['Select Download Folder'],tkfl)
 app.addStatusbar(fields=1,side="LEFT")
 app.setStatusbarBg('seagreen')
 app.setStatusbarWidth(200)
-
+app.setSticky('news')
 app.go()
 
 
