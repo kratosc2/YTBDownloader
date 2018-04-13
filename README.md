@@ -12,5 +12,5 @@ apt-get install libav-tools
 ```
 
 ```sh
-apt-get install selenium 
+pip install selenium 
 ```
