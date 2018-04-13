@@ -1,10 +1,23 @@
 from __future__ import unicode_literals
+from selenium import webdriver
 import youtube_dl
 from appJar import gui
 import time
 from ffprobe import FFProbe
 from Tkinter import Tk
 import tkFileDialog 
+
+
+##### SELENIUM PART
+driver = webdriver.Firefox()
+driver.get('https://www.youtube.com')
+def openwebde():
+    driver = webdriver.Firefox()
+    openweb = driver.get('https://www.youtube.com')
+    print driver.current_url
+
+
+
 
 locat = '/root/Downloads/' 
 
@@ -75,7 +88,43 @@ def press(btn):
                 ydl.download([durl])
                 print locat
                 app.clearEntry('e1')
-        app.thread(getinfo) 
+        app.thread(getinfo)
+
+
+def downloadcurrent(btn):
+    print driver.current_url
+    if btn == "Download Current":
+        optb = app.getOptionBox('Format')
+        if optb == "best" or optb == None:
+            ydl_opts={'format:':optb,'outtml':'%(title)s', 'nonplaylist':True,'logger':MyLogger(),'progress_hooks':[my_hook],'outtmpl':locat+ '%(title)s'}
+        else:
+            ydl_opts={'format':optb,'outtml':'%(title)s','noplaylist':True,'logger':MyLogger(), 'postprocessors': [{
+        'key': 'FFmpegExtractAudio',
+        'preferredcodec': 'mp3',
+        'preferredquality': '192',
+        }],'outtmpl':locat + '%(title)s'+'%(id)s'+'.' +'%(ext)s'}
+        durl = driver.current_url
+
+        def getinfo():
+            global locat
+            with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+                mt1 = ydl.extract_info(durl,download=False)
+                mt1t = (str(mt1['title'].encode('ascii','replace')) )
+                mt2u = (str(mt1['uploader'].encode('ascii','replace')) )
+                mt3v = (str(mt1['view_count']) )
+                mt4d = ((str(mt1['duration'] / 60) + ':'+ str(mt1['duration'] % 60) ) )
+                mt5ud = (str(mt1['upload_date']) )
+                mt6ex = (str(mt1['ext']))
+                mtf = (str(mt1['format']))
+                app.addGridRow('lb1',[mt1t,mt2u,mt3v,mt4d,mt5ud,mt6ex,mtf])
+                ydl.download([durl])
+                print locat
+                app.clearEntry('e1')
+        app.thread(getinfo)
+
+
+
+
 
 
 app.addEntry('e1',0,0)
@@ -110,6 +159,9 @@ app.addStatusbar(fields=1,side="LEFT")
 app.setStatusbarBg('seagreen')
 app.setStatusbarWidth(200)
 app.setSticky('news')
+app.addButton('OpenWeb',openwebde,7,0)
+app.addButton('Download Current',downloadcurrent,7,1)
+app.setButtonSticky('OpenWeb','news')
 app.go()
 
 
