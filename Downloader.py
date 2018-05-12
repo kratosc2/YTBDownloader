@@ -102,7 +102,7 @@ def downloadcurrent(btn):
         'key': 'FFmpegExtractAudio',
         'preferredcodec': 'mp3',
         'preferredquality': '192',
-        }],'outtmpl':locat + '%(title)s'+'%(id)s'+'.' +'%(ext)s'}
+        }],'outtmpl':locat + '%(title)s'+'.' +'%(ext)s'}
         durl = driver.current_url
 
         def getinfo():
